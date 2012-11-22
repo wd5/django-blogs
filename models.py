@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 #from django.utils.html import strip_tags
-#from django.conf import settings
+from django.conf import settings
 #
 #from mptt.models import MPTTModel, TreeForeignKey
 #from tinymce import models as tinymce_models
-#from slugify import slugify
+from slugify import slugify
 #from tagging.fields import TagField
 #from tagging.models import Tag
 
@@ -22,9 +22,25 @@ def image_upload_to( instance, filename ):
 class BlogsBlog( models.Model ):
     author = models.ForeignKey( User )
     title = models.CharField( max_length = 200, blank = True )
+    description = models.TextField( blank = True )
+    status = models.CharField( 
+        max_length = 15,
+        choices = settings.STATUS_CHOICES,
+        default = 'active',
+        db_index = True
+    )
+
+    def __unicode__( self ):
+        return self.title
+
+    def slug( self ):
+        return slugify( self.title )
+
 
 class BlogsPost( CommonPost ):
     blog = models.ForeignKey( BlogsBlog )
+    image = models.ForeignKey( 'BlogsPostImage', blank = True, null = True )
+
 
 class BlogsPostImage( CommonPostImage ):
     post = models.ForeignKey( BlogsPost )

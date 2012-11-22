@@ -1,1 +1,17 @@
 {% extends "blogs/blogs.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+            {% for post in posts %}
+                <div>
+                    <h2><a href="{% url blogs-blog id=post.blog.id slug=post.blog.slug %}">{{ post.blog.title }}</a> // <a href="{% url blogs-post id=post.id slug=post.slug %}">{{ post.title }}</a></h2>
+                    <p>
+                        {{ post.snippet }}
+                    </p>
+                </div>
+            {% empty %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
