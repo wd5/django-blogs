@@ -38,7 +38,7 @@ class BlogsBlog( models.Model ):
 
 
 class BlogsPost( CommonPost ):
-    blog = models.ForeignKey( BlogsBlog )
+    blog = models.ForeignKey( BlogsBlog, blank = True, null = True )
     image = models.ForeignKey( 'BlogsPostImage', blank = True, null = True )
 
 

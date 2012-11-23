@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 from . models import BlogsBlog, BlogsPost, BlogsPostImage
-from . forms import BlogsBlogEditForm
+from . forms import BlogsBlogEditForm, BlogsPostEditForm, BlogsImageUploadForm
 from common.utils import log
 
 def get_posts( blog = None, page = None ):
@@ -65,7 +65,6 @@ def edit_blog( request, id ):
         raise Http404
 
     form = BlogsBlogEditForm( instance = blog )
-    log( form )
     if request.method == "POST":
         form = BlogsBlogEditForm( request.POST, instance = blog )
 
@@ -85,12 +84,36 @@ def edit_blog( request, id ):
 
 @login_required
 def add_post( request ):
-    data = {}
-    return render( request, 'blogs/edit-post.html', data )
+
+    if request.session.get( 'blogs-post-draft-id', '' ) and int( request.session['blogs-post-draft-id'] ) > 0:
+        return redirect( 'blogs-edit-post', id = request.session['blogs-post-draft-id'] )
+    else:
+        post = BlogsPost( status = 'draft', author = User.objects.get( pk = request.user.id ) )
+        post.save()
+        request.session['blogs-post-draft-id'] = post.id
+        return redirect( 'blogs-edit-post', id = post.id )
 
 @login_required
 def edit_post( request, id ):
-    data = {}
+
+    id = int( id )
+
+    try:
+        post = BlogsPost.objects.get( pk = id )
+    except BlogsPost.DoesNotExist:
+        raise Http404
+    
+    user = User.objects.get( pk = request.user.id )
+
+#    blogs = BlogsBlog.objects.filter( author = user )
+
+    form = BlogsPostEditForm( instance = post )
+
+    data = {
+        'post':post,
+        'image_upload_form':BlogsImageUploadForm( initial = {'post':post} ),
+        'form':form,
+    }
     return render( request, 'blogs/edit-post.html', data )
 
 def blog( request, id, slug = None, page = None ):
