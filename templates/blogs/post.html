@@ -1,19 +1,21 @@
 {% extends "blogs/blogs.html" %}
 
+{% block title %}
+    {{ post.title }} / {{ post.blog.title }} / {{ block.super }}
+{% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container blogs-post-view">
         <div class="content">
-            
             <div>
-                <h2><a href="{% url blogs-blog id=post.blog.id slug=post.blog.slug %}">{{ post.blog.title }}</a> // {{ post.title }}</h2>
+                <h4><a href="{% url blogs-blog id=post.blog.id slug=post.blog.slug %}">{{ post.blog.title }}</a> //</h4>
+                <h2>{{ post.title }}</h2>
                 <div>
                     {% autoescape off %}                    
                         {{ post.content }}
                     {% endautoescape %}
                 </div>
             </div>
-            
         </div>
     </div>
 {% endblock %}

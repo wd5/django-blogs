@@ -1,17 +1,38 @@
 {% extends "blogs/blogs.html" %}
 
+{% block title %}
+    {{ blog.title }} / {{ block.super }}
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <div class="content">
-            {% for post in posts %}
-                <div>
-                    <h2><a href="{% url blogs-post id=post.id slug=post.slug %}">{{ post.title }}</a></h2>
-                    <p>
-                        {{ post.snippet }}
-                    </p>
+    <div class="container blogs-blog-view">
+        <div class="row">
+            <div class="span9">
+                <div class="content">
+                    <div class="blog-intro">
+						<h2>{{ blog.title }}</h2>
+                        <p>{{ blog.description }}</p>
+                    </div>
+                    <div class="blog-posts">
+                        {% for post in posts %}
+                            <div>
+                                <h3><a href="{% url blogs-post id=post.id slug=post.slug %}">{{ post.title }}</a></h3>
+                                <p>
+                                    {{ post.snippet }}
+                                </p>
+                            </div>
+                        {% empty %}
+                            <div class="alert alert-info">
+                                no posts
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            {% empty %}
-            {% endfor %}
+            </div>
+            <div class="span3">
+
+            </div>
         </div>
+
     </div>
 {% endblock %}
