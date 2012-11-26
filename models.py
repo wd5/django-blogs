@@ -29,6 +29,9 @@ class BlogsBlog( models.Model ):
         default = 'active',
         db_index = True
     )
+    date_add = models.DateTimeField( auto_now_add = True, null=True )
+    date_edit = models.DateTimeField( auto_now = True,null=True )
+
 
     def __unicode__( self ):
         return self.title
@@ -38,7 +41,7 @@ class BlogsBlog( models.Model ):
 
 
 class BlogsPost( CommonPost ):
-    blog = models.ForeignKey( BlogsBlog, blank = True, null = True )
+    blog = models.ForeignKey( BlogsBlog, blank = True )
     image = models.ForeignKey( 'BlogsPostImage', blank = True, null = True )
 
 

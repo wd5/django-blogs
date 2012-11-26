@@ -4,12 +4,13 @@ from common.admin import CommonPostAdmin
 from . models import BlogsBlog, BlogsPost, BlogsPostImage 
 
 class BlogsBlogAdmin(admin.ModelAdmin):
-    pass
+    list_display = ( 'title', 'author', 'date_edit', 'date_add', 'status' )
 
 class BlogsPostAdmin( admin.ModelAdmin ):
-    search_fields = ( 'title', )
-    list_filter = ( 'date_edit', )
     list_display = ( 'title', 'author', 'date_edit', 'date_add', 'status' )
+    search_fields = ( 'title', 'author', )
+    list_filter = ( 'date_edit', )
+
     
 admin.site.register( BlogsBlog, BlogsBlogAdmin )
 admin.site.register( BlogsPost, BlogsPostAdmin )
