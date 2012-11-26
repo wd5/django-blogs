@@ -1,7 +1,15 @@
 {% extends "template.html" %}
 
+{% load i18n %}
+
+{% trans 'Blogs' as blogs %}
+
 {% block module_style %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/blogs/blogs.css">
 {% endblock %}
 
-{% block title %} Blogs / {% endblock %}
+{% block title %} {% trans 'Blogs' %} / {% endblock %}
+
+{% block module_name %}{% trans 'Blogs' %}{% endblock %}
+{% block module_description %}{% endblock %}
+{% block module_actions %}{% endblock %}
