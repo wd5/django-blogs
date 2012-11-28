@@ -31,6 +31,14 @@ class BlogsBlog( models.Model ):
     )
     date_add = models.DateTimeField( auto_now_add = True, null=True )
     date_edit = models.DateTimeField( auto_now = True,null=True )
+    post_count = models.PositiveSmallIntegerField( 
+        default = 0,
+        editable = False
+    )
+    comment_count = models.PositiveSmallIntegerField( 
+        default = 0,
+        editable = False
+    )
 
 
     def __unicode__( self ):

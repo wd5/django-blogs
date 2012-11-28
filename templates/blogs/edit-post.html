@@ -2,6 +2,12 @@
 
 {% load bootstrap %}
 
+{% block header_code %}
+    {{ form.media }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/edit.css">
+    
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -52,9 +58,24 @@
 {% endblock %}
 {% block footer_code %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/plugins/jquery.form.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/libs/class.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/mylibs/uploadimage.js"></script>
     <script type="text/javascript">
         ;(function($){
             "use strict";
+            $(function(){
+                var uploadImages = new window.uploadImages({
+                    
+                })
+            });
+        })(jQuery || django.jQuery);
+    </script>
+    
+    {% comment %}
+    <script type="text/javascript">
+        ;(function($){
+            "use strict";
+            
             $(function(){
                 $('#image-upload-form').ajaxForm({                                                                                                                                                                  
                     success:function(data){
@@ -124,4 +145,5 @@
             });
         })(jQuery || django.jQuery);
     </script>
+    {% endcomment %}
 {% endblock %}

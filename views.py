@@ -73,7 +73,10 @@ def edit_blog( request, id ):
             blog.status = 'active'
             blog.save()
 
-            del request.session['blogs-blog-draft-id']
+            try:
+                del request.session['blogs-blog-draft-id']
+            except:
+                pass
 
             return redirect( 'blogs-blog', id = id )
 
