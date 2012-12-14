@@ -9,7 +9,7 @@ from slugify import slugify
 #from tagging.fields import TagField
 #from tagging.models import Tag
 
-from common.models import CommonCategory, CommonPost, CommonPostImage
+from common.models import CommonCategory, CommonPost, CommonPostImage, CommonPostComment
 
 # Create your models here.
 
@@ -56,3 +56,7 @@ class BlogsPost( CommonPost ):
 class BlogsPostImage( CommonPostImage ):
     post = models.ForeignKey( BlogsPost )
     image = models.ImageField( upload_to = image_upload_to )
+
+
+class BlogsPostComment( CommonPostComment ):
+    post = models.ForeignKey(BlogsPost)

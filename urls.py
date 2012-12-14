@@ -10,6 +10,7 @@ urlpatterns = patterns( 'blogs',
     url( r'^post-(?P<id>\d+)(?:\-(?P<slug>[\w\-]+))?/$', 'views.post', name = 'blogs-post' ),
     url( r'^ajax/image-upload/$', 'ajax.image_upload', name = 'blogs-ajax-image-upload' ),
     url( r'^ajax/primary/$', 'ajax.primary', name = 'blogs-ajax-primary' ),
+    url( r'ajax/save-comment', 'ajax.save_comment', name='blogs-save-comment' ),
     url( r'^$', 'views.home', name = 'blogs-home' ),
  )
 

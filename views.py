@@ -7,8 +7,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
-from . models import BlogsBlog, BlogsPost, BlogsPostImage
-from . forms import BlogsBlogEditForm, BlogsPostEditForm, BlogsImageUploadForm
+from . models import BlogsBlog, BlogsPost, BlogsPostImage, BlogsPostComment
+from . forms import BlogsBlogEditForm, BlogsPostEditForm, BlogsImageUploadForm, BlogsPostCommentForm
 from common.utils import log
 
 def get_posts( blog = None, page = None ):
@@ -105,12 +105,23 @@ def edit_post( request, id ):
         post = BlogsPost.objects.get( pk = id )
     except BlogsPost.DoesNotExist:
         raise Http404
-    
+
     user = User.objects.get( pk = request.user.id )
 
-#    blogs = BlogsBlog.objects.filter( author = user )
-
     form = BlogsPostEditForm( instance = post )
+
+    if request.method == "POST":
+        form = BlogsPostEditForm( request.POST, instance = post )
+        if form.is_valid():
+            form.save()
+            post.status = 'active'
+            post.save()
+            try:
+                del request.session['blogs-post-draft-id']
+            except:
+                pass
+
+            return redirect( 'blogs-post', id = id )
 
     data = {
         'post':post,
@@ -152,7 +163,7 @@ def post( request, id, slug = None ):
         return redirect( 'blogs-post', id = post.id, slug = post.slug() )
 
     data = {
-        'post':post
+        'post':post,
     }
 
     return render( request, 'blogs/post.html', data )

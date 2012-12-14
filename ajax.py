@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 
 from zokiguide.decorators import render_to_json
 
-from . models import BlogsPost, BlogsPostImage
-from . forms import BlogsImageUploadForm
+from common.utils import log
+from . models import BlogsPost, BlogsPostImage, BlogsPostComment
+from . forms import BlogsImageUploadForm, BlogsPostCommentForm
 
 @login_required
 @render_to_json
@@ -59,6 +60,37 @@ def primary( request ):
 
     data = {
         'result':'ok',
+    }
+
+    return data
+
+@login_required
+@render_to_json
+def save_comment( request ):
+
+    post_id = int( request.POST['post'] )
+    log(str(post_id))
+    log(str(request.POST['parent']))
+    try:
+        post = BlogsPost.objects.get( pk = post_id )
+    except BlogsPost.DoesNotExist:
+        raise Http404
+
+#    log(post)
+    comment = ''
+
+    if request.method == "POST":
+        form = BlogsPostCommentForm( request.POST )
+        log(str(form))
+        if form.is_valid():
+            comment = form.save()
+            log(comment)
+
+
+    data = {
+        'status':'success',
+        'message':'',
+        'result':comment,
     }
 
     return data
