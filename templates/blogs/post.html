@@ -1,4 +1,6 @@
 {% extends "blogs/blogs.html" %}
+{% load i18n %}
+{% load bootstrap %}
 
 {% block title %}
     {{ post.title }} / {{ post.blog.title }} / {{ block.super }}
@@ -17,5 +19,12 @@
                 </div>
             </div>
         </div>
+
+    	<div class="comments">
+    		<h3>комментарии</h3>
+            {% load disqus_tags %}
+            {% disqus_dev %}
+            {% disqus_show_comments %}
+    	</div>
     </div>
 {% endblock %}
