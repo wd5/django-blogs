@@ -18,13 +18,17 @@
                     {% endautoescape %}
                 </div>
             </div>
+
+
+            <div class="comments">
+                <h3>комментарии</h3>
+                {% load disqus_tags %}
+                {% disqus_dev %}
+                {% disqus_show_comments %}
+            </div>
+
         </div>
 
-    	<div class="comments">
-    		<h3>комментарии</h3>
-            {% load disqus_tags %}
-            {% disqus_dev %}
-            {% disqus_show_comments %}
-    	</div>
+
     </div>
 {% endblock %}
