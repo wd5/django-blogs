@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+#from django.contrib.auth import get_user_model
 #from django.utils.html import strip_tags
 from django.conf import settings
 #
@@ -8,6 +9,8 @@ from django.conf import settings
 from slugify import slugify
 #from tagging.fields import TagField
 #from tagging.models import Tag
+
+
 
 from common.models import CommonCategory, CommonPost, CommonPostImage, CommonPostComment
 
