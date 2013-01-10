@@ -1,14 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import Http404
 
-from zokiguide.decorators import render_to_json
-
+from common.decorators import json_response
 from common.utils import log
+
 from . models import BlogsPost, BlogsPostImage, BlogsPostComment
 from . forms import BlogsImageUploadForm, BlogsPostCommentForm
 
 @login_required
-@render_to_json
+@json_response
 def image_upload( request ):
 
     id = int( request.POST['post'] )
@@ -39,7 +40,7 @@ def image_upload( request ):
     return data
 
 @login_required
-@render_to_json
+@json_response
 def primary( request ):
 
     post_id = int( request.POST['post_id'] )
@@ -65,7 +66,7 @@ def primary( request ):
     return data
 
 @login_required
-@render_to_json
+@json_response
 def save_comment( request ):
 
     post_id = int( request.POST['post'] )
