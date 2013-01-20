@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 
 # (?P<year>\d{4})
 urlpatterns = patterns( 'blogs',
+#    url(r'^top/$', name='top')
     url( r'^add-blog/$', 'views.add_blog', name = 'add-blog' ),
     url( r'^edit-blog/(?P<id>\d+)$', 'views.edit_blog', name = 'edit-blog' ),
     url( r'^add-post/$', 'views.add_post', name = 'add-post' ),
@@ -11,6 +12,6 @@ urlpatterns = patterns( 'blogs',
     url( r'^ajax/image-upload/$', 'ajax.image_upload', name = 'ajax-image-upload' ),
     url( r'^ajax/primary/$', 'ajax.primary', name = 'ajax-primary' ),
     url( r'ajax/save-comment', 'ajax.save_comment', name='save-comment' ),
-    url( r'^$', 'views.home', name = 'home' ),
+    url( r'^$', 'views.home', name = 'home'),
  )
 

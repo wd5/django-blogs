@@ -1,0 +1,32 @@
+{% extends "template.html" %}
+
+{% load i18n %}
+
+{% block module_style %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/blogs/blogs.css">
+{% endblock %}
+
+{% block title %} {% trans 'Blogs' %} / {% endblock %}
+
+{% block module_name %}{% trans 'Blogs' %}{% endblock %}
+{% block module_description %}
+    {% blocktrans %}
+        personal travelers's blogs
+    {% endblocktrans %}
+{% endblock %}
+{% block module_actions %}{% endblock %}
+
+
+{% block wrapper %}
+    <div class="container">
+        <div class="row">
+            <div class="span9">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="span3">
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
