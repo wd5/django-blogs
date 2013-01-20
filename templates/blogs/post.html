@@ -10,7 +10,7 @@
     <div class="container blogs-post-view">
         <div class="content">
             <div>
-                <h4><a href="{% url 'blogs-blog' id=post.blog.id slug=post.blog.slug %}">{{ post.blog.title }}</a> //</h4>
+                <h4><a href="{% url 'blog:blog' id=post.blog.id slug=post.blog.slug %}">{{ post.blog.title }}</a> //</h4>
                 <h2>{{ post.title }}</h2>
                 <div>
                     {% autoescape off %}                    

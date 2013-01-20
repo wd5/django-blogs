@@ -44,7 +44,7 @@ def home( request ):
 @login_required
 def add_blog( request ):
     if request.session.get( 'blogs-blog-draft-id', '' ) and int( request.session['blogs-blog-draft-id'] ) > 0:
-        return redirect( 'blogs-edit-blog', id = request.session['blogs-blog-draft-id'] )
+        return redirect( 'blog:edit-blog', id = request.session['blogs-blog-draft-id'] )
     else:
         blog = BlogsBlog( 
             author = User.objects.get( 
@@ -53,7 +53,7 @@ def add_blog( request ):
         )
         blog.save()
         request.session['blogs-blog-draft-id'] = blog.id
-        return redirect( 'blogs-edit-blog', id = blog.id )
+        return redirect( 'blog:edit-blog', id = blog.id )
 
 @login_required
 def edit_blog( request, id ):
@@ -78,7 +78,7 @@ def edit_blog( request, id ):
             except:
                 pass
 
-            return redirect( 'blogs-blog', id = id )
+            return redirect( 'blog:blog', id = id )
 
     data = {
         'form':form
@@ -89,12 +89,12 @@ def edit_blog( request, id ):
 def add_post( request ):
 
     if request.session.get( 'blogs-post-draft-id', '' ) and int( request.session['blogs-post-draft-id'] ) > 0:
-        return redirect( 'blogs-edit-post', id = request.session['blogs-post-draft-id'] )
+        return redirect( 'blog:edit-post', id = request.session['blogs-post-draft-id'] )
     else:
         post = BlogsPost( status = 'draft', author = User.objects.get( pk = request.user.id ) )
         post.save()
         request.session['blogs-post-draft-id'] = post.id
-        return redirect( 'blogs-edit-post', id = post.id )
+        return redirect( 'blog:edit-post', id = post.id )
 
 @login_required
 def edit_post( request, id ):
@@ -121,7 +121,7 @@ def edit_post( request, id ):
             except:
                 pass
 
-            return redirect( 'blogs-post', id = id )
+            return redirect( 'blog:post', id = id )
 
     data = {
         'post':post,
@@ -140,7 +140,7 @@ def blog( request, id, slug = None, page = None ):
         raise Http404
 
     if blog.slug() != slug:
-        return redirect( 'blogs-blog', id = blog.id, slug = blog.slug() )
+        return redirect( 'blog:blog', id = blog.id, slug = blog.slug() )
 
     posts = get_posts( blog, page )
 
@@ -160,7 +160,7 @@ def post( request, id, slug = None ):
         raise Http404
 
     if post.slug() != slug:
-        return redirect( 'blogs-post', id = post.id, slug = post.slug() )
+        return redirect( 'blog:post', id = post.id, slug = post.slug() )
 
     data = {
         'post':post,
